@@ -1,0 +1,841 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap");
+
+:root {
+  font-family: "Orbitron", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --accent-color: #667eea;
+  --accent-hover: #5a6fd6;
+  --error-color: #ff6b6b;
+  --success-color: #51cf66;
+}
+
+/* NUCLEAR OPTION: Enforce Orbitron on EVERYTHING */
+* {
+  box-sizing: border-box;
+  font-family: "Orbitron", sans-serif !important;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; /* Fix height */
+  background-color: #0f0f0f; 
+  color: var(--text-primary);
+  overflow: hidden; /* Prevent body scroll (Double Scrollbar fix) */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(5, 5, 10, 0.35); /* Much more transparent to show galaxy */
+  backdrop-filter: blur(12px); /* Slightly lower blur for clearer stars */
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  box-shadow: var(--glass-shadow);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  animation: fadeIn 0.5s ease-out;
+  color: white; /* Ensure text is white */
+}
+
+.glass-card-clerk {
+  background: rgba(
+    5,
+    5,
+    10,
+    0.4
+  ) !important; /* Lighter bg to blend with dark theme */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 24px !important;
+  box-shadow: var(--glass-shadow);
+}
+
+.text-accent {
+  color: #8b5cf6 !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.text-gray-300 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.orbitron-font {
+  font-family: "Orbitron", sans-serif !important;
+  letter-spacing: 1px;
+}
+
+.cl-formButtonPrimary {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6) !important;
+  font-family: "Orbitron", sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cl-footerActionLink {
+  color: #8b5cf6 !important;
+}
+
+.settings-page-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+/* Force Clerk to expand fully and not scroll internally */
+.clerk-scroll-override {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.glass-card-clerk .cl-rootBox {
+  width: 100%;
+  max-width: 800px;
+}
+
+/* Inputs */
+.input-group {
+  margin-bottom: 0.8rem;
+  position: relative;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  color-scheme: dark; /* Ensures date picker is dark */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Fix for Select Dropdowns */
+select.form-input option {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 10px;
+}
+
+.error-msg {
+  color: var(--error-color);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  position: absolute;
+}
+
+/* ------------------------------------------------ */
+/* FORM TYPOGRAPHY UPDATES (Orbitron)              */
+/* ------------------------------------------------ */
+
+/* Apply Sci-Fi font to Inputs, Labels, and Dropdowns */
+.form-input,
+.input-label,
+select,
+option,
+.btn-primary {
+  /* font-family: "Orbitron", sans-serif !important;  <-- Handled globally now */
+  letter-spacing: 1px; /* Spacing makes it look more "Digital/HUD" */
+}
+
+/* Optional: Make the typed text slightly brighter/glowy */
+.form-input {
+  text-shadow: 0 0 2px rgba(165, 180, 252, 0.3);
+}
+
+/* Buttons */
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #5558e6, #7c3aed);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Utilities */
+.text-center {
+  text-align: center;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 1rem 0;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+p {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Wrapper */
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.auth-page-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* align-items: center;  <-- Caused cutoff for tall content */
+  min-height: 100%; /* Ensure it spans at least full height */
+  padding: 40px 0; /* Add top/bottom space */
+}
+
+/* Add margin-auto to children for safe centering */
+.auth-page-container > * {
+  margin: auto;
+}
+
+/* Spline Background Wrapper */
+.spline-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Loader */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ensure canvas is visible */
+canvas {
+  display: block;
+  outline: none;
+}
+
+/* Dashboard Integration */
+.dashboard-btn-container {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.register-btn {
+  border-radius: 9999px; /* rounded-full */
+  background-color: white;
+  padding: 0.75rem 2rem; /* py-3 px-8 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: black;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.register-btn:hover {
+  background-color: #e5e7eb; /* bg-gray-200 */
+}
+
+/* Custom Date Picker */
+.custom-date-picker {
+  position: relative;
+  width: 100%;
+}
+
+.custom-date-picker .input-wrapper {
+  position: relative;
+}
+
+.custom-date-picker .calendar-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.calendar-popup {
+  position: absolute;
+  bottom: 100%;
+  top: auto;
+  left: 0;
+  margin-bottom: 8px;
+  margin-top: 0;
+  padding: 1rem;
+  z-index: 1000;
+  border-radius: 12px;
+  width: 280px;
+  animation: fadeIn 0.15s ease-out;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+
+.calendar-select {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.calendar-select:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-select option {
+  background: #1a1a1a;
+  color: white;
+}
+
+.calendar-grid-header,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: 4px;
+}
+
+.calendar-grid-header {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.calendar-day {
+  padding: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.calendar-day:hover:not(.empty):not(.disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-day.selected {
+  background: var(--accent-color);
+  color: white;
+}
+
+.calendar-day.disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* Hide Clerk Development Badge */
+.cl-developmentBadge {
+  display: none !important;
+}
+
+/* Dashboard Classes */
+.dashboard-welcome-box {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: rgba(5, 5, 10, 0.4);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Ticket List Classes */
+.ticket-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ticket-info h3 {
+  color: white;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.ticket-info p {
+  color: #a5b4fc;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.ticket-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ticket-actions {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+/* Form Classes */
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Landing Page Classes */
+.landing-container {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh; /* Force viewport height */
+  width: 100%; /* Changed from 100vw to avoid scrollbar calc issues */
+  max-width: 100%;
+  padding: 0 20px;
+  overflow: hidden; /* Prevent scrolling */
+  position: absolute; /* Take out of flow to avoid parent scroll */
+  top: 0;
+  left: 0;
+  box-sizing: border-box; /* Ensure padding doesn't add to width */
+}
+
+.mobile-break {
+  display: none;
+}
+
+.landing-title {
+  font-size: clamp(2.5rem, 8vw, 4rem); /* Responsive scaling */
+  font-weight: 800;
+  margin-bottom: 2rem;
+  background: linear-gradient(to bottom right, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  word-wrap: break-word; /* Ensure it breaks if absolutely needed */
+  max-width: 100%;
+}
+
+.landing-desc {
+  font-size: clamp(1rem, 4vw, 1.3rem); 
+  margin-bottom: 2.5rem;
+  color: rgba(150, 178, 211, 0.8);
+  max-width: 800px;
+}
+
+/* Sidebar Classes */
+.sidebar {
+  width: 260px;
+  background-color: rgba(5, 5, 10, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  z-index: 50;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+.mobile-menu-btn {
+  display: none; /* Hidden on desktop */
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sidebar-close-btn {
+  display: none; /* Hidden on desktop */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+
+/* Dashboard Layout Classes */
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.dashboard-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  /* Momentum scrolling for iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS OVERRIDES
+   Targeting devices < 768px (Tablets & Phones)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .dashboard-welcome-box {
+    padding: 1.5rem;
+  }
+  
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Global Layout Adjustments */
+  .app-container {
+    padding: 10px;
+    align-items: flex-start; /* Allow scrolling from top */
+    overflow-y: auto;
+  }
+
+  .auth-page-container {
+    padding: 20px 0;
+    align-items: flex-start;
+  }
+
+  /* Card Adjustments */
+  .glass-card {
+    padding: 1.25rem;
+    border-radius: 20px;
+    margin: 10px 0;
+  }
+
+  /* Typography Scaling */
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Form Elements */
+  .form-input,
+  .btn-primary {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 12px;
+  }
+
+  /* Layout Stacking */
+  .calendar-grid-header,
+  .calendar-grid {
+    gap: 2px;
+  }
+
+  .calendar-day {
+    padding: 4px;
+    font-size: 0.8rem;
+  }
+
+  /* Dashboard Adjustments */
+  .dashboard-btn-container {
+    position: fixed;
+    bottom: 20px;
+    width: 90%;
+  }
+
+  /* Scanner Adjustments */
+  .scanner-container {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #reader {
+    width: 100% !important;
+  }
+
+  /* Ticket List Mobile */
+  .ticket-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .ticket-actions {
+    width: 100%;
+    align-items: flex-start;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+  }
+
+  /* Form Mobile */
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .input-group {
+    width: 100%;
+  }
+
+  /* Landing Page Mobile */
+  .landing-title {
+    font-size: clamp(2rem, 7vw, 3rem); 
+    margin-bottom: 1.5rem;
+    padding: 0 5px;
+    width: 100%;
+    line-height: 1.2;
+  }
+  
+  .landing-desc {
+    font-size: 1rem;
+    padding: 0 1.5rem; 
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 6; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .landing-container {
+      height: 100dvh; 
+      width: 100%;
+      overflow: hidden;
+      position: fixed;
+      z-index: 100;
+  }
+  
+  .mobile-break {
+      display: block;
+  }
+
+  /* Sidebar Mobile */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%); /* Hidden by default */
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar-overlay.open {
+    display: block;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+  
+  /* Push main content down/adjust padding to account for menu button */
+  .dashboard-main {
+    padding-top: 5rem !important; /* Space for menu button */
+    padding-bottom: 80px !important; /* Space for bottom elements if any */
+  }
+
+  /* Fix for "Double Scroll" - Ensure strict viewport height */
+  .dashboard-layout {
+    height: 100dvh; /* Use dynamic viewport height */
+  }
+}

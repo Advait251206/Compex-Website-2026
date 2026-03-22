@@ -1,0 +1,23 @@
+{
+  "name": "compex-registration-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "admin",
+    "user"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:admin": "npm run dev --workspace=admin",
+    "dev:user": "npm run dev --workspace=user",
+    "build": "npm run build --workspaces"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react-reconciler": "^0.29.0",
+    "scheduler": "^0.27.0"
+  }
+}

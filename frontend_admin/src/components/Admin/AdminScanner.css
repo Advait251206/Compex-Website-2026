@@ -1,0 +1,296 @@
+/* AdminScanner.css */
+
+/* Hide the "Scan an Image File" link if possible, or style it */
+#html5-qrcode-anchor-scan-type-change {
+  text-decoration: none !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  display: inline-block;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+
+/* #html5-qrcode-button-camera-permission styles moved to conditional block below */
+
+/* Scanner Box Styling */
+.scanner-container {
+    position: relative;
+    width: 100%;
+    height: 550px; /* Fixed height to prevent expansion */
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3); /* Lighter to blend with glass card */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#reader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center !important;
+    padding-bottom: 100px !important; /* Shift optical center upwards for permission screen */
+}
+
+/* Remove padding when video is active so it centers normally */
+#reader:has(video) {
+    padding-bottom: 0 !important;
+    justify-content: flex-start !important; /* Let video fill from top */
+}
+
+/* Force internal library wrapper to be centered and clean */
+#reader > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+/* Aggressively force ALL internal headers/divs to be centered and full width */
+#reader div {
+    width: 100% !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+/* Specific target for the dashboard section (permission button area) */
+#reader div[id*="dashboard"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 20; /* Ensure controls are on top */
+}
+
+#reader video {
+    width: 100% !important;
+    height: 100% !important; /* Fill container */
+    object-fit: cover !important; /* Crop to fit */
+    border-radius: 8px;
+    max-height: 550px !important; /* Sanity check */
+}
+
+/* Mirrored Mode Toggle */
+.mirrored-mode video {
+    transform: scaleX(-1) !important;
+}
+
+/* Permission Button - Always Visible now */
+#html5-qrcode-button-camera-permission {
+  display: inline-block !important; /* Visible by default */
+  background: linear-gradient(90deg, #6366f1, #8b5cf6) !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-family: "Orbitron", sans-serif !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 auto !important; /* Force horizontal center */
+}
+
+/* Styled Stop Scanning Button */
+#html5-qrcode-button-camera-stop {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #ff5555 !important;
+  border: 1px solid #ff5555 !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  font-family: "Orbitron", sans-serif !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  margin: 10px auto 20px auto !important; /* Add bottom margin to prevent touching border */
+  transition: all 0.3s ease;
+  /* display: block !important;  <-- REMOVED to let library handle visibility */
+}
+
+#html5-qrcode-button-camera-stop:hover {
+  background: rgba(239, 68, 68, 0.4) !important;
+  box-shadow: 0 0 10px rgba(255, 85, 85, 0.4);
+}
+
+/* Styled Start Scanning Button */
+#html5-qrcode-button-camera-start {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #34d399 !important;
+  border: 1px solid #34d399 !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  font-family: "Orbitron", sans-serif !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  margin: 10px auto !important;
+  transition: all 0.3s ease;
+}
+
+#html5-qrcode-button-camera-start:hover {
+  background: rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+}
+
+/* Styled Camera Select Dropdown */
+#html5-qrcode-select-camera {
+    background: rgba(15, 23, 42, 0.8) !important;
+    color: #00f3ff !important;
+    border: 1px solid rgba(0, 243, 255, 0.3) !important;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    font-family: 'Orbitron', sans-serif !important;
+    margin-bottom: 10px !important;
+    outline: none !important;
+}
+
+#html5-qrcode-select-camera:focus {
+    border-color: #00f3ff !important;
+    box-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
+}
+
+/* Hide Camera Selection Controls in File Mode */
+/* Cleaned up old mode-file rules since file mode is disabled */
+
+/* Hide the "Scan type" text and link to force Camera Only */
+#html5-qrcode-anchor-scan-type-change {
+    display: none !important;
+}
+
+/* Hard-working styles to catch the generated drop zone without classes */
+
+/* Custom Corner Markers */
+.scanner-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let clicks pass through to buttons */
+  z-index: 10;
+}
+
+.scanner-frame::before,
+.scanner-frame::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #00f3ff;
+  transition: all 0.3s ease;
+}
+
+.scanner-frame::before {
+  top: 20px;
+  left: 20px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 12px;
+}
+
+.scanner-frame::after {
+  bottom: 20px;
+  right: 20px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 12px;
+}
+
+/* Ensure icons/images are centered */
+#reader img {
+    margin: 0 auto !important;
+    display: block !important;
+}
+
+/* Link styling removed to prevent zombie link appearing */
+
+/* Laser Scan Animation */
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444;
+  top: 0;
+  left: 0;
+  animation: scan 2s linear infinite;
+  opacity: 0.6;
+  z-index: 5;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Success/Error Cards Animation */
+.result-card {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hide the default stop button provided by library to use our custom reset logic if needed, 
+   but library usually allows stop. We'll style generic buttons in the reader */
+/* File Scan UI Styling REMOVED */
+
+/* Styles for the file input button are no longer needed but kept safe just in case */
+
+/* Laser Scan Animation */
+#reader span {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* HIDE LIBRARY BLOAT */
+/* Hide the "Powered by" and "Report issue" links */
+#reader a[href*="scanapp"] {
+    display: none !important;
+}
+
+#reader img[src*="info"], 
+#reader img[alt*="Info"] {
+    display: none !important;
+}
+
+/* Hide Default Torch Buttons to replace with custom one */
+#reader button {
+    /* We can't target text content in CSS easily, but we can assume the library 
+       puts these buttons in the dashboard. We'll try to hide unstyled buttons 
+       or let JS do the heavy lifting. */
+}
+/* Just in case, let's try to target by common behavior if possible, 
+   but JS is safer. We will leave this clean and handle in JS/TSX component 
+   to find the button with text "Torch" */
+
+
