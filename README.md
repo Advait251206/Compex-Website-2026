@@ -147,12 +147,3 @@ To run this project locally, you need to configure Environment Variables in `.en
 - `VITE_API_URL`: URL of the deployed backend.
 
 </details>
-
----
-
-## 👨‍💻 Made By
-
-| Developer               | Contact                                                  | GitHub                                           |
-| :---------------------- | :------------------------------------------------------- | :----------------------------------------------- |
-| **Advait Kawale**       | ✉️ advaitkawale@gmail.com <br> 📞 +91 93594 19281        | [@Advait251206](https://github.com/Advait251206) |
-| **Pravesh Shrivastava** | ✉️ praveshpshrivastava@gmail.com <br> 📞 +91 90217 93584 | [@Pravesh-21](https://github.com/Pravesh-21)     |
