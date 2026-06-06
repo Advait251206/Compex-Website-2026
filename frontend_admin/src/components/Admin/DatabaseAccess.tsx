@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { adminAPI } from '../../services/api';
-import * as XLSX from 'xlsx';
+// xlsx removed - using native export instead
 import CustomSelect from '../UI/CustomSelect';
 
 // Define interfaces
@@ -387,19 +387,20 @@ export default function DatabaseAccess() {
     const data = getCurrentData();
     if (data.length === 0) return;
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, activeTab.charAt(0).toUpperCase() + activeTab.slice(1));
-    
-    // Auto-width columns
-    const cols = Object.keys(data[0] || {}).map(key => {
-        const maxContentLength = data.reduce((w, r: any) => Math.max(w, String(r[key] || '').length), 10);
-        const headerLength = key.length;
-        return { wch: Math.max(maxContentLength, headerLength) + 2 };
-    });
-    worksheet['!cols'] = cols;
-
-    XLSX.writeFile(workbook, `compex_${activeTab}_${new Date().toISOString().split('T')[0]}.xlsx`);
+    // Build Excel-compatible CSV (BOM + comma-separated)
+    const headers = Object.keys(data[0]);
+    const escape = (val: any) => `"${String(val ?? '').replace(/"/g, '""')}"`;
+    const rows = [headers.map(escape).join(','), ...data.map(row => headers.map(h => escape((row as any)[h])).join(','))];
+    // UTF-8 BOM so Excel opens with correct encoding
+    const blob = new Blob(['\uFEFF' + rows.join('\n')], { type: 'application/vnd.ms-excel;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `compex_${activeTab}_${new Date().toISOString().split('T')[0]}.xlsx`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleCheckInToggle = async (id: string, currentStatus: boolean, isTicketId: boolean = false) => {
