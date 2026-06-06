@@ -27,6 +27,7 @@
     "express-validator": "^7.3.1",
     "mongoose": "^9.1.2",
     "multer": "^2.0.2",
+    "object-assign": "^4.1.1",
     "pdfkit": "^0.17.2",
     "qrcode": "^1.5.4",
     "sib-api-v3-sdk": "^8.5.0"
