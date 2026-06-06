@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { Clerk } from '@clerk/clerk-sdk-node';
+import { createClerkClient, verifyToken } from '@clerk/backend';
 
-const clerk = Clerk({ secretKey: process.env.CLERK_SECRET_KEY });
+const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
 export const clerkAuth = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -20,7 +20,7 @@ export const clerkAuth = async (req: Request, res: Response, next: NextFunction)
          return res.status(401).json({ message: 'Invalid token format' });
     }
 
-    const sessionClaims = await clerk.verifyToken(token);
+    const sessionClaims = await verifyToken(token, { secretKey: process.env.CLERK_SECRET_KEY as string });
     
     if (!sessionClaims) {
       return res.status(401).json({ message: 'Invalid token' });

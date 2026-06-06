@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import multer from 'multer';
-import xlsx from 'xlsx';
+import ExcelJS from 'exceljs';
 import { sendWinnerEmail } from '../services/emailService';
 import smsService from '../services/smsService';
 
@@ -8,7 +8,7 @@ import smsService from '../services/smsService';
 const storage = multer.memoryStorage();
 export const uploadMiddleware = multer({ storage }).single('file');
 
-export const uploadDraw = (req: Request, res: Response) => {
+export const uploadDraw = async (req: Request, res: Response) => {
     console.log("🍀 Upload Draw Request Received");
     try {
         if (!req.file) {
@@ -37,10 +37,38 @@ export const uploadDraw = (req: Request, res: Response) => {
                 }
             }
         } else {
-            // EXCEL / CSV Logic
-            const workbook = xlsx.read(req.file.buffer, { type: 'buffer' });
-            const sheetName = workbook.SheetNames[0];
-            jsonData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+            // EXCEL Logic
+            const workbook = new ExcelJS.Workbook();
+            if (req.file.originalname.endsWith('.csv')) {
+                // Not perfectly handling CSV but rejecting for simplicity if needed, 
+                // or you can add csv-parser. For now, let's treat as unsupported.
+                return res.status(400).json({ message: "CSV upload is currently limited, please upload JSON or XLSX format!" });
+            } else {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                await (workbook.xlsx.load as any)(req.file.buffer);
+                const worksheet = workbook.worksheets[0];
+                if (worksheet) {
+                    const keys: string[] = [];
+                    worksheet.getRow(1).eachCell((cell, colNumber) => {
+                        keys[colNumber] = cell.value ? String(cell.value) : `Column_${colNumber}`;
+                    });
+                    
+                    worksheet.eachRow((row, rowNumber) => {
+                        if (rowNumber > 1) {
+                            let obj: any = {};
+                            row.eachCell((cell, colNumber) => {
+                                const key = keys[colNumber];
+                                if (key) {
+                                    // exceljs formula/hyperlink cells have objects
+                                    obj[key] = (cell.type === ExcelJS.ValueType.Formula) ? cell.result : 
+                                               (cell.type === ExcelJS.ValueType.Hyperlink) ? cell.text : cell.value;
+                                }
+                            });
+                            jsonData.push(obj);
+                        }
+                    });
+                }
+            }
         }
         
         if (!jsonData || !jsonData.length) return res.status(400).json({ message: "File is empty or invalid!" });

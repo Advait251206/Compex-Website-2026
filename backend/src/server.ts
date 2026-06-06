@@ -18,7 +18,6 @@ app.set('trust proxy', 1);
 const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
-// Connect to MongoDB
 connectDB().then(() => {
   // Run cleanup immediately after DB connection
   cleanupStaleTickets();
@@ -32,7 +31,7 @@ const cleanupStaleTickets = async () => {
     // Delete tickets that are PENDING and haven't been updated in 5 minutes
     // This removes abandoned registration attempts
     const result = await import('./models/Ticket').then(m => m.default.deleteMany({
-      status: 'pending', // Hardcoded safely or use enum if imported
+      status: 'pending' as any, // Cast to any to avoid strict enum type mismatch
       updatedAt: { $lt: fiveMinutesAgo }
     }));
 
@@ -42,7 +41,7 @@ const cleanupStaleTickets = async () => {
   } catch (error) {
     console.error('Cleanup Check Error:', error);
   }
-  };
+};
 
 // 🚑 OFFENSIVE FIX: Remove 'null' emails AND real duplicates causing E11000 errors
 const fixDatabaseAndSync = async () => {
@@ -68,9 +67,7 @@ const fixDatabaseAndSync = async () => {
         ]);
 
         for (const group of phoneDups) {
-            // Keep the last created/updated one (or any logic) - usually the newest is best or verified one
-            // We just pop one and delete the rest
-            const [keep, ...remove] = group.ids.reverse(); // Assuming chronological push, but better to just keep one
+            const [keep, ...remove] = group.ids.reverse();
             if (remove.length > 0) {
                  await Ticket.deleteMany({ _id: { $in: remove } });
                  console.log(`🚑 Removed ${remove.length} duplicate tickets for phone: ${group._id}`);
